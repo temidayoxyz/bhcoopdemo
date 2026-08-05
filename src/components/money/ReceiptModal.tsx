@@ -34,7 +34,7 @@ export function ReceiptModal({
         </div>
         <div className="p-6 space-y-4" id="receipt-print">
           <div className="text-center pb-4 border-b border-dashed border-ink-200">
-            <div className="text-xs font-semibold uppercase tracking-widest text-seed-700 mb-1">SeedCoop</div>
+            <div className="text-xs font-semibold uppercase tracking-widest text-seed-700 mb-1">Blessed Hands</div>
             <div className="text-2xl font-bold tabular-nums text-seed-950">{formatNaira(receipt.amountKobo)}</div>
             {receipt.typeLabel && (
               <div className="text-sm text-ink-600 mt-1">{receipt.typeLabel}</div>

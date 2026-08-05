@@ -3,14 +3,14 @@ import react from '@vitejs/plugin-react';
 import path from 'path';
 import { defineConfig } from 'vite';
 
-// GitHub Pages project site: https://temidayoxyz.github.io/seedcoopdemo/
-const REPO_NAME = 'seedcoopdemo';
+// GitHub Pages project site: https://temidayoxyz.github.io/bhcoopdemo/
+const REPO_NAME = 'bhcoopdemo';
 
 export default defineConfig(({ mode }) => {
   const isPages = mode === 'pages' || process.env.GITHUB_PAGES === 'true';
 
   return {
-    // Required so asset URLs work under /seedcoopdemo/
+    // Required so asset URLs work under /bhcoopdemo/
     base: isPages ? `/${REPO_NAME}/` : '/',
     plugins: [react(), tailwindcss()],
     resolve: {

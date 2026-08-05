@@ -6,8 +6,8 @@ import { handleMockApi } from './mockApi';
  */
 export function installStaticDemoFetch() {
   if (typeof window === 'undefined') return;
-  if ((window as any).__seedcoopApiInstalled) return;
-  (window as any).__seedcoopApiInstalled = true;
+  if ((window as any).__bhcoopApiInstalled) return;
+  (window as any).__bhcoopApiInstalled = true;
 
   const originalFetch = window.fetch.bind(window);
 

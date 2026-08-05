@@ -44,9 +44,9 @@ export function JoinPage() {
     <div className="flex flex-col min-h-screen pt-16">
       <section className="bg-seed-950 text-white py-16">
         <div className="max-w-3xl mx-auto px-4 text-center">
-          <h1 className="text-4xl font-bold mb-4">Join SeedCoop — free with a referral</h1>
+          <h1 className="text-4xl font-bold mb-4">Join Blessed Hands</h1>
           <p className="text-seed-200 text-lg">
-            Create your account with a member referral code. Then pay the ₦2,000 registration fee,
+            Membership is free with a referral. Create your account, pay the ₦2,000 registration fee,
             complete Know Your Member (KYM), and await board approval.
           </p>
         </div>
@@ -58,8 +58,8 @@ export function JoinPage() {
           className="max-w-lg mx-auto bg-white border border-ink-200 rounded-[14px] p-6 sm:p-8 space-y-4 shadow-sm"
         >
           <div className="bg-seed-50 border border-seed-100 rounded-[10px] p-3 text-sm text-seed-900">
-            Referral code is a member number (e.g. <strong className="font-mono">{SUPER_ADMIN_REFERRAL_CODE}</strong> for Super Admin).
-            After approval your own code is your new SC- number.
+            Use a member code as your referral (e.g. <strong className="font-mono">{SUPER_ADMIN_REFERRAL_CODE}</strong> for Super Admin).
+            After approval, your own membership number becomes your referral code.
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">

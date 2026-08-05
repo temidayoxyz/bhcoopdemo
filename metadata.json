@@ -1,5 +1,5 @@
 {
-  "name": "SeedCoop",
+  "name": "Blessed Hands",
   "description": "Digital Cooperative Society Platform for Savings, Deposits, Loans, and Member Management",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]

@@ -53,7 +53,7 @@ import { AdminMarket } from './pages/admin/AdminMarket';
 import { AdminMarketOrders } from './pages/admin/AdminMarketOrders';
 import { MemberDividends } from './pages/member/MemberDividends';
 
-// Vite BASE_URL is e.g. "/seedcoopdemo/" on GitHub Pages
+// Vite BASE_URL is e.g. "/bhcoopdemo/" on GitHub Pages
 const routerBasename = ((import.meta as any).env?.BASE_URL || '/').replace(/\/$/, '') || undefined;
 
 export default function App() {

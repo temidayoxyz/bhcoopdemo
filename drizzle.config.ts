@@ -5,6 +5,6 @@ export default defineConfig({
   out: './data/migrations',
   dialect: 'sqlite',
   dbCredentials: {
-    url: 'file:./data/seedcoop-demo.db',
+    url: 'file:./data/bhcoop-demo.db',
   },
 });

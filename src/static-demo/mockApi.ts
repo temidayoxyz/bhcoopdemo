@@ -936,7 +936,7 @@ export async function handleMockApi(input: RequestInfo | URL, init?: RequestInit
       state,
       auth.user.email,
       'MEMBERSHIP_LEFT',
-      'You have left SeedCoop',
+      'You have left Blessed Hands',
       { membershipNumber: member.membershipNumber },
       `Your membership ${member.membershipNumber} is closed. Ledger history is retained by the cooperative.`,
     );
@@ -1296,7 +1296,7 @@ export async function handleMockApi(input: RequestInfo | URL, init?: RequestInit
       state,
       application.email,
       'MEMBERSHIP_APPROVED',
-      'Welcome to SeedCoop — membership approved',
+      'Welcome to Blessed Hands — membership approved',
       { membershipNumber, referralCode },
       `Your membership number and referral code is ${membershipNumber}. Sign in with your email and the password you chose at signup. Buy minimum ₦20,000 share capital under Shares. Your monthly savings obligation is now active.`,
     );
@@ -1528,7 +1528,7 @@ export async function handleMockApi(input: RequestInfo | URL, init?: RequestInit
       const u = state.users.find((x) => x.id === member.userId);
       if (u) {
         u.role = 'MEMBER';
-        u.email = `removed+${member.membershipNumber.toLowerCase()}@seedcoop.invalid`;
+        u.email = `removed+${member.membershipNumber.toLowerCase()}@blessedhands.invalid`;
         u.updatedAt = now();
       }
     }
@@ -1957,14 +1957,14 @@ export async function handleMockApi(input: RequestInfo | URL, init?: RequestInit
   if (apiPath === '/api/public/join/validate-referral' && method === 'POST') {
     const code = String(body.code || '').trim().toUpperCase();
     if (!code) return json({ error: 'Referral code required' }, 400);
-    // Referral code = membership number (e.g. SC-001)
+    // Referral code = membership number (e.g. BH-001)
     const referrer = state.members.find(
       (m: any) =>
         m.status === 'ACTIVE' &&
         (String(m.referralCode || '').toUpperCase() === code ||
           String(m.membershipNumber || '').toUpperCase() === code),
     );
-    if (!referrer) return json({ valid: false, error: 'Invalid or inactive referral code (use a member code like SC-001)' }, 400);
+    if (!referrer) return json({ valid: false, error: 'Invalid or inactive referral code (use a member code like BH-001)' }, 400);
     return json({
       valid: true,
       referrer: `${referrer.firstName} ${referrer.lastName}`,
@@ -1989,7 +1989,7 @@ export async function handleMockApi(input: RequestInfo | URL, init?: RequestInit
         (String(m.referralCode || '').toUpperCase() === code ||
           String(m.membershipNumber || '').toUpperCase() === code),
     );
-    if (!referrer) return json({ error: 'Invalid referral code — use a member code like SC-001' }, 400);
+    if (!referrer) return json({ error: 'Invalid referral code — use a member code like BH-001' }, 400);
 
     const t = now();
     const userId = uid();

@@ -1,5 +1,5 @@
 {
-  "name": "react-example",
+  "name": "bhcoopdemo",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -15,7 +15,7 @@
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
     "db:seed": "tsx src/db/seed.ts",
-    "db:reset": "rm -rf data/seedcoop-demo.db && rm -rf data/migrations && npm run db:generate && npm run db:migrate && npm run db:seed"
+    "db:reset": "rm -rf data/bhcoop-demo.db && rm -rf data/migrations && npm run db:generate && npm run db:migrate && npm run db:seed"
   },
   "dependencies": {
     "@google/genai": "^2.4.0",

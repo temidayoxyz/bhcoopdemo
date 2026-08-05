@@ -129,7 +129,7 @@ export function MemberOnboarding() {
       <div className="max-w-2xl mx-auto space-y-8">
         <header className="text-center">
           <h1 className="text-3xl font-bold text-seed-950">Membership onboarding</h1>
-          <p className="text-ink-600 mt-2">Complete these steps to become an active SeedCoop member.</p>
+          <p className="text-ink-600 mt-2">Complete these steps to become an active Blessed Hands member.</p>
           {app && <p className="text-sm font-mono text-seed-700 mt-2">{app.reference}</p>}
         </header>
 
@@ -291,7 +291,7 @@ export function MemberOnboarding() {
             <p className="text-ink-600">
               {data.member ? (
                 <>
-                  Welcome to SeedCoop. Your member number is{' '}
+                  Welcome to Blessed Hands. Your member number is{' '}
                   <strong className="font-mono text-seed-800">{data.member.membershipNumber}</strong>
                   . That number is also your referral code.
                 </>

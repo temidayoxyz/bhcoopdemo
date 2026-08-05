@@ -117,7 +117,8 @@ export function MemberLayout() {
             <div className="w-6 h-6 rounded-full bg-seed-800 flex items-center justify-center">
               <div className="w-1.5 h-1.5 rounded-full bg-ivory-50" />
             </div>
-            <span className="font-semibold tracking-tight text-seed-950">SeedCoop Member</span>
+            <span className="font-semibold tracking-tight text-seed-950">Blessed Hands</span>
+            <span className="text-xs font-medium text-ink-500 ml-0.5">Member</span>
           </Link>
         </div>
         <div className="p-4 border-b border-ink-200">

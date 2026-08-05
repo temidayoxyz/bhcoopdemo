@@ -6,11 +6,11 @@ export type { CoopState };
 // v4: staff names — Dan Segun / Ola Dayo / Tunde Bakare
 // v5: member market — products, orders, order items + deposit wallet balances
 // v6: Financial Secretary, shares min, trial loans, onboarding, triple approval, deposit withdrawals
-// v7: referral = membership number (SA = SC-001), savings rename, live personas
+// v7: referral = membership number (SA = BH-001), savings rename, live personas
 // v8: leave cooperative, investment allocation, referrer display
 // v9: monthly savings settings + auto obligations
-const STORAGE_KEY = 'seedcoop-state-v9';
-const SESSION_KEY = 'seedcoop-session-v9';
+const STORAGE_KEY = 'bhcoop-state-v1';
+const SESSION_KEY = 'bhcoop-session-v1';
 
 export type Session = { userId: string; portal: 'MEMBER' | 'ADMIN' };
 
@@ -97,14 +97,14 @@ export function getAuth(state: CoopState) {
   };
 }
 
-/** Next SC-NNN from existing members */
+/** Next BH-NNN from existing members */
 export function nextMembershipNumber(state: CoopState): string {
   let max = 0;
   for (const m of state.members) {
     const n = parseInt(String(m.membershipNumber || '').replace(/\D/g, ''), 10);
     if (!Number.isNaN(n) && n > max) max = n;
   }
-  return `SC-${String(max + 1).padStart(3, '0')}`;
+  return `BH-${String(max + 1).padStart(3, '0')}`;
 }
 
 /** Resolve who referred a member (by code / membership number). */

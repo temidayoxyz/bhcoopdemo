@@ -130,7 +130,8 @@ export function AdminLayout() {
             <div className="w-6 h-6 rounded-full bg-ivory-50 flex items-center justify-center">
               <div className="w-1.5 h-1.5 rounded-full bg-seed-950" />
             </div>
-            <span className="font-semibold tracking-tight">SeedCoop Staff</span>
+            <span className="font-semibold tracking-tight">Blessed Hands</span>
+            <span className="text-xs font-medium text-seed-400 ml-0.5">Staff</span>
           </Link>
         </div>
         <div className="p-4 border-b border-seed-800">
@@ -168,7 +169,7 @@ export function AdminLayout() {
 
       <aside className={`fixed top-0 bottom-0 left-0 w-72 bg-seed-950 text-white z-50 transform transition-transform md:hidden flex flex-col ${isMobileOpen ? 'translate-x-0' : '-translate-x-full'}`}>
         <div className="h-16 flex items-center justify-between px-6 border-b border-seed-800">
-          <span className="font-semibold">SeedCoop Staff</span>
+          <span className="font-semibold">Blessed Hands <span className="text-seed-400 font-medium text-sm">Staff</span></span>
           <button type="button" onClick={() => setIsMobileOpen(false)}><X className="w-6 h-6" /></button>
         </div>
         <div className="p-4 border-b border-seed-800">

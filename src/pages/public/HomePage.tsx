@@ -26,7 +26,7 @@ export function HomePage() {
               <span className="text-seed-700">See every contribution count.</span>
             </h1>
             <p className="text-lg text-ink-600 mb-8 leading-relaxed">
-              SeedCoop is a private digital operating system for our cooperative. 
+              Blessed Hands is a private digital operating system for our cooperative. 
               We turn individual contributions into a shared reserve, creating 
               transparent opportunity and collective stability for all members.
             </p>
@@ -323,7 +323,7 @@ export function HomePage() {
                 initials: 'DS',
                 duty: 'Full platform control — membership, loans, funds, investments, and settings.',
                 icon: Scale,
-                membership: 'SC-008',
+                membership: 'BH-008',
                 highlight: true,
               },
               {
@@ -332,7 +332,7 @@ export function HomePage() {
                 initials: 'OD',
                 duty: 'Governance ops — applications, member status, and loan approval. No treasury writes.',
                 icon: BadgeCheck,
-                membership: 'SC-010',
+                membership: 'BH-010',
                 highlight: false,
               },
               {
@@ -341,7 +341,7 @@ export function HomePage() {
                 initials: 'TB',
                 duty: 'Money movement — contributions, deposits, withdrawals, disbursement, and dividends.',
                 icon: Coins,
-                membership: 'SC-009',
+                membership: 'BH-009',
                 highlight: false,
               },
             ].map((leader) => (
@@ -424,7 +424,7 @@ export function HomePage() {
                 <div className="w-3 h-3 rounded-full bg-ink-200"></div>
                 <div className="w-3 h-3 rounded-full bg-ink-200"></div>
               </div>
-              <div className="text-sm font-medium text-ink-400">SeedCoop Member Portal</div>
+              <div className="text-sm font-medium text-ink-400">Blessed Hands Member Portal</div>
             </div>
             <div className="p-8 grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
               <div className="col-span-2 bg-white border border-ink-200 rounded-[10px] p-6 shadow-sm">

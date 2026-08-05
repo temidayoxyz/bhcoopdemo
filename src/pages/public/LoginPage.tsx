@@ -18,7 +18,7 @@ export function LoginPage() {
   const navigate = useNavigate();
   const [staff, setStaff] = useState<Persona[]>([]);
   const [members, setMembers] = useState<Persona[]>([]);
-  const [password, setPassword] = useState('seedcoop');
+  const [password, setPassword] = useState('blessedhands');
   const [loadingEmail, setLoadingEmail] = useState<string | null>(null);
   const [resetting, setResetting] = useState(false);
   const [emailLogin, setEmailLogin] = useState({ email: '', password: '', portal: 'MEMBER' as 'MEMBER' | 'ADMIN' });
@@ -126,7 +126,7 @@ export function LoginPage() {
     <div className="min-h-[calc(100vh-64px)] py-12 px-4 sm:px-6 lg:px-8 bg-ivory-50">
       <div className="max-w-4xl mx-auto space-y-8">
         <div className="text-center">
-          <h1 className="text-3xl font-bold tracking-tight text-seed-950">Sign in to SeedCoop</h1>
+          <h1 className="text-3xl font-bold tracking-tight text-seed-950">Sign in to Blessed Hands</h1>
           <p className="mt-2 text-ink-600 max-w-xl mx-auto">
             Use a demo profile, or sign in with the email and password you chose when you joined.
           </p>

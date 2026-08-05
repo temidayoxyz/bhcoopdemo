@@ -33,10 +33,12 @@ async function seed() {
     const adminId = uuidv4();
     const treasurerId = uuidv4();
     const opsAdminId = uuidv4();
+    const demoPassword = 'blessedhands';
+
     await db.insert(schema.users).values([
-      { id: adminId, email: 'admin@seedcoop.demo', passwordHash: 'demo123', role: 'SUPER_ADMIN', createdAt: now, updatedAt: now },
-      { id: treasurerId, email: 'treasurer@seedcoop.demo', passwordHash: 'demo123', role: 'TREASURER', createdAt: now, updatedAt: now },
-      { id: opsAdminId, email: 'ops@seedcoop.demo', passwordHash: 'demo123', role: 'ADMIN', createdAt: now, updatedAt: now },
+      { id: adminId, email: 'admin@blessedhands.ng', passwordHash: demoPassword, role: 'SUPER_ADMIN', createdAt: now, updatedAt: now },
+      { id: treasurerId, email: 'treasurer@blessedhands.ng', passwordHash: demoPassword, role: 'FINANCIAL_SECRETARY', createdAt: now, updatedAt: now },
+      { id: opsAdminId, email: 'ops@blessedhands.ng', passwordHash: demoPassword, role: 'ADMIN', createdAt: now, updatedAt: now },
     ]);
 
     const adaUserId = uuidv4();
@@ -44,9 +46,9 @@ async function seed() {
     const temidayoUserId = uuidv4();
 
     await db.insert(schema.users).values([
-      { id: adaUserId, email: 'john@seedcoop.demo', passwordHash: 'demo123', role: 'MEMBER', createdAt: now, updatedAt: now },
-      { id: chidiUserId, email: 'chidi@seedcoop.demo', passwordHash: 'demo123', role: 'MEMBER', createdAt: now, updatedAt: now },
-      { id: temidayoUserId, email: 'temidayo@seedcoop.demo', passwordHash: 'demo123', role: 'MEMBER', createdAt: now, updatedAt: now },
+      { id: adaUserId, email: 'ada.okonkwo@blessedhands.ng', passwordHash: demoPassword, role: 'MEMBER', createdAt: now, updatedAt: now },
+      { id: chidiUserId, email: 'chidi.okafor@blessedhands.ng', passwordHash: demoPassword, role: 'MEMBER', createdAt: now, updatedAt: now },
+      { id: temidayoUserId, email: 'temidayo.adebayo@blessedhands.ng', passwordHash: demoPassword, role: 'MEMBER', createdAt: now, updatedAt: now },
     ]);
 
     const adaMemberId = uuidv4();
@@ -55,28 +57,28 @@ async function seed() {
 
     await db.insert(schema.members).values([
       {
-        id: uuidv4(), userId: adminId, membershipNumber: 'SC-008', firstName: 'Dan', lastName: 'Segun', phoneNumber: '+2348010000008',
+        id: uuidv4(), userId: adminId, membershipNumber: 'BH-001', firstName: 'Dan', lastName: 'Segun', phoneNumber: '+2348010000001',
         status: 'ACTIVE', totalContributionsKobo: 72000000, joinedAt: getUnixTime(subMonths(new Date(now * 1000), 36))
       },
       {
-        id: uuidv4(), userId: treasurerId, membershipNumber: 'SC-009', firstName: 'Tunde', lastName: 'Bakare', phoneNumber: '+2348010000009',
+        id: uuidv4(), userId: treasurerId, membershipNumber: 'BH-002', firstName: 'Tunde', lastName: 'Bakare', phoneNumber: '+2348010000002',
         status: 'ACTIVE', totalContributionsKobo: 60000000, joinedAt: getUnixTime(subMonths(new Date(now * 1000), 30))
       },
       {
-        id: uuidv4(), userId: opsAdminId, membershipNumber: 'SC-010', firstName: 'Ola', lastName: 'Dayo', phoneNumber: '+2348010000010',
+        id: uuidv4(), userId: opsAdminId, membershipNumber: 'BH-003', firstName: 'Ola', lastName: 'Dayo', phoneNumber: '+2348010000003',
         status: 'ACTIVE', totalContributionsKobo: 48000000, joinedAt: getUnixTime(subMonths(new Date(now * 1000), 24))
       },
       {
-        id: adaMemberId, userId: adaUserId, membershipNumber: 'SC-10042', firstName: 'John', lastName: 'Doe', phoneNumber: '+2348001234567',
-        status: 'ACTIVE', totalContributionsKobo: 12000000, joinedAt: getUnixTime(subMonths(new Date(now * 1000), 6))
+        id: adaMemberId, userId: adaUserId, membershipNumber: 'BH-004', firstName: 'Ada', lastName: 'Okonkwo', phoneNumber: '+2348010000004',
+        status: 'ACTIVE', totalContributionsKobo: 36000000, joinedAt: getUnixTime(subMonths(new Date(now * 1000), 18))
       },
       {
-        id: chidiMemberId, userId: chidiUserId, membershipNumber: 'SC-2026-002', firstName: 'Chidi', lastName: 'Okafor', phoneNumber: '+2348023456789',
-        status: 'ACTIVE', totalContributionsKobo: 24000000, joinedAt: getUnixTime(subMonths(new Date(now * 1000), 12))
+        id: chidiMemberId, userId: chidiUserId, membershipNumber: 'BH-005', firstName: 'Chidi', lastName: 'Okafor', phoneNumber: '+2348010000005',
+        status: 'ACTIVE', totalContributionsKobo: 48000000, joinedAt: getUnixTime(subMonths(new Date(now * 1000), 24))
       },
       {
-        id: temidayoMemberId, userId: temidayoUserId, membershipNumber: 'SC-2026-003', firstName: 'Temidayo', lastName: 'Adebayo', phoneNumber: '+2348034567890',
-        status: 'ACTIVE', totalContributionsKobo: 5000000, joinedAt: getUnixTime(subMonths(new Date(now * 1000), 2))
+        id: temidayoMemberId, userId: temidayoUserId, membershipNumber: 'BH-006', firstName: 'Temidayo', lastName: 'Adebayo', phoneNumber: '+2348010000006',
+        status: 'ACTIVE', totalContributionsKobo: 8000000, joinedAt: getUnixTime(subMonths(new Date(now * 1000), 8))
       }
     ]);
 
@@ -104,7 +106,7 @@ async function seed() {
     console.log('Seeding announcements...');
     await db.insert(schema.announcements).values([
       { id: uuidv4(), title: 'Annual General Meeting', content: 'Our upcoming AGM will hold on the 15th of next month. All active members are expected.', audience: 'MEMBER', publishedAt: getUnixTime(subMonths(new Date(now * 1000), 1)) },
-      { id: uuidv4(), title: 'Welcome to SeedCoop', content: 'We are excited to launch our new digital cooperative platform.', audience: 'PUBLIC', publishedAt: getUnixTime(subMonths(new Date(now * 1000), 2)) }
+      { id: uuidv4(), title: 'Welcome to Blessed Hands', content: 'We are excited to launch our new digital cooperative platform.', audience: 'PUBLIC', publishedAt: getUnixTime(subMonths(new Date(now * 1000), 2)) }
     ]);
 
     console.log('Database seeded successfully.');

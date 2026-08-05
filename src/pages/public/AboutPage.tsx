@@ -7,7 +7,7 @@ export function AboutPage() {
       {/* Hero Section */}
       <section className="bg-seed-950 text-white py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-6">About SeedCoop</h1>
+          <h1 className="text-4xl md:text-5xl font-bold mb-6">About Blessed Hands</h1>
           <p className="text-xl text-seed-200 max-w-2xl mx-auto leading-relaxed">
             We are a cooperative built on trust, transparency, and collective growth. 
             Empowering members through shared financial resources.
@@ -62,7 +62,7 @@ export function AboutPage() {
               </div>
               <h2 className="text-3xl md:text-4xl font-bold text-seed-950 mb-6">Rooted in community</h2>
               <p className="text-ink-600 text-lg mb-6 leading-relaxed">
-                SeedCoop was founded on a simple principle: when we work together, we grow together. 
+                Blessed Hands was founded on a simple principle: when we work together, we grow together. 
                 What started as a small group of individuals pooling resources to support each other's 
                 goals has evolved into a robust cooperative.
               </p>
@@ -148,7 +148,7 @@ export function AboutPage() {
                 initials: 'DS',
                 duty: 'Full platform control — membership, loans, funds, investments, and settings.',
                 icon: Scale,
-                membership: 'SC-008',
+                membership: 'BH-008',
                 highlight: true,
               },
               {
@@ -157,7 +157,7 @@ export function AboutPage() {
                 initials: 'OD',
                 duty: 'Governance ops — applications, member status, and loan approval. No treasury writes.',
                 icon: BadgeCheck,
-                membership: 'SC-010',
+                membership: 'BH-010',
                 highlight: false,
               },
               {
@@ -166,7 +166,7 @@ export function AboutPage() {
                 initials: 'TB',
                 duty: 'Money movement — contributions, deposits, withdrawals, disbursement, and dividends.',
                 icon: Coins,
-                membership: 'SC-009',
+                membership: 'BH-009',
                 highlight: false,
               },
             ].map((leader) => (

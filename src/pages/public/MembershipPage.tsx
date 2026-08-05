@@ -7,7 +7,7 @@ export function MembershipPage() {
     <div className="flex flex-col min-h-screen pt-16">
       <section className="bg-seed-950 text-white py-24">
         <div className="max-w-4xl mx-auto px-4 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-6">Join SeedCoop</h1>
+          <h1 className="text-4xl md:text-5xl font-bold mb-6">Membership</h1>
           <p className="text-xl text-seed-200">
             Free signup with a referral code. Pay a modest registration fee, complete Know Your Member (KYM),
             and join a growing thrift community.

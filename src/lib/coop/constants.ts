@@ -29,7 +29,7 @@ export const DEV_FEE_NONRESIDENT_KOBO = 1_200_000; // ₦12,000
 export const DEV_FEE_DEADLINE_MONTH = 3;
 
 /** Super Admin membership number doubles as the cold-start referral code */
-export const SUPER_ADMIN_REFERRAL_CODE = 'SC-001';
+export const SUPER_ADMIN_REFERRAL_CODE = 'BH-001';
 
 export const SALARY_RANGES = [
   { value: 'UNDER_500K', label: 'Under ₦500,000' },

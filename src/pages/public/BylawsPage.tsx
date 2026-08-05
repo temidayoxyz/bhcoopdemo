@@ -6,7 +6,7 @@ export function BylawsPage() {
         <div className="max-w-none text-ink-700 space-y-6">
           <p className="text-sm text-ink-500">Adopted: January 2015</p>
           <h2 className="text-2xl font-bold text-seed-950 mt-8 mb-4">Article I: Name and Purpose</h2>
-          <p className="leading-relaxed">The name of this cooperative shall be SeedCoop. Its purpose is to promote the economic welfare of its members by providing a secure means to save and access credit at reasonable rates.</p>
+          <p className="leading-relaxed">The name of this cooperative shall be Blessed Hands. Its purpose is to promote the economic welfare of its members by providing a secure means to save and access credit at reasonable rates.</p>
           <h2 className="text-2xl font-bold text-seed-950 mt-8 mb-4">Article II: Membership</h2>
           <p className="leading-relaxed">Membership is open to individuals who share the common bond of the cooperative. Admission to membership is subject to approval by the Board of Directors.</p>
           <h2 className="text-2xl font-bold text-seed-950 mt-8 mb-4">Article III: Capital and Liability</h2>

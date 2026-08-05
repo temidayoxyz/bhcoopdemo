@@ -69,7 +69,7 @@ export function MemberProfile() {
   const handleLeave = async () => {
     if (
       !confirm(
-        'Leave SeedCoop permanently? Your ledger history stays with the cooperative. You will be signed out.',
+        'Leave Blessed Hands permanently? Your ledger history stays with the cooperative. You will be signed out.',
       )
     ) {
       return;
@@ -236,7 +236,7 @@ export function MemberProfile() {
           onClick={handleLeave}
           className="px-4 py-2.5 rounded-[8px] text-sm font-medium border border-danger/40 text-danger hover:bg-danger/5 disabled:opacity-50"
         >
-          {leaving ? 'Leaving…' : 'Leave SeedCoop'}
+          {leaving ? 'Leaving…' : 'Leave Blessed Hands'}
         </button>
         {user?.role && user.role !== 'MEMBER' && (
           <p className="text-xs text-ink-500">

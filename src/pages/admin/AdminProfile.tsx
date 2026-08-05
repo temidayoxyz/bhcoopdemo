@@ -60,7 +60,7 @@ export function AdminProfile() {
               <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-gold-500/10 text-gold-600 border border-gold-500/20">
                 {user?.role || 'SUPER_ADMIN'}
               </span>
-              <span className="text-xs text-ink-500">SeedCoop Administrator</span>
+              <span className="text-xs text-ink-500">Blessed Hands staff</span>
             </div>
           </div>
         </div>

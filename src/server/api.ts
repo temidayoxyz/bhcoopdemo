@@ -17,8 +17,8 @@ function requireStaffUser(req: any) {
 
 // Demo auth middleware — portal cookies; staff may also hold a member profile
 apiRouter.use(async (req, res, next) => {
-  const memberToken = req.cookies['seedcoop-member-demo-session'];
-  const adminToken = req.cookies['seedcoop-admin-demo-session'];
+  const memberToken = req.cookies['bhcoop-member-demo-session'];
+  const adminToken = req.cookies['bhcoop-admin-demo-session'];
 
   if (memberToken) {
     const user = await db.query.users.findFirst({ where: eq(schema.users.id, memberToken) });
@@ -77,7 +77,7 @@ apiRouter.get('/auth/personas', async (req, res) => {
     };
   });
 
-  res.json({ personas: { staff, members }, passwordHint: 'demo123' });
+  res.json({ personas: { staff, members }, passwordHint: 'blessedhands' });
 });
 
 apiRouter.post('/system/reset', async (req, res) => {
@@ -99,14 +99,14 @@ apiRouter.post('/auth/login', async (req, res) => {
     if (!member) {
       return res.status(403).json({ error: 'No member profile linked to this account' });
     }
-    res.cookie('seedcoop-member-demo-session', user.id, { httpOnly: true });
-    res.clearCookie('seedcoop-admin-demo-session', { httpOnly: true });
+    res.cookie('bhcoop-member-demo-session', user.id, { httpOnly: true });
+    res.clearCookie('bhcoop-admin-demo-session', { httpOnly: true });
   } else if (portal === 'ADMIN') {
     if (!isStaff(user.role)) {
       return res.status(403).json({ error: 'Not a staff account' });
     }
-    res.cookie('seedcoop-admin-demo-session', user.id, { httpOnly: true });
-    res.clearCookie('seedcoop-member-demo-session', { httpOnly: true });
+    res.cookie('bhcoop-admin-demo-session', user.id, { httpOnly: true });
+    res.clearCookie('bhcoop-member-demo-session', { httpOnly: true });
   } else {
     return res.status(400).json({ error: 'Invalid portal' });
   }
@@ -132,14 +132,14 @@ apiRouter.post('/auth/switch-portal', async (req, res) => {
     if (!isStaff(user.role) || !member) {
       return res.status(403).json({ error: 'Cannot switch to member view' });
     }
-    res.cookie('seedcoop-member-demo-session', user.id, { httpOnly: true });
-    res.clearCookie('seedcoop-admin-demo-session', { httpOnly: true });
+    res.cookie('bhcoop-member-demo-session', user.id, { httpOnly: true });
+    res.clearCookie('bhcoop-admin-demo-session', { httpOnly: true });
   } else if (portal === 'ADMIN') {
     if (!isStaff(user.role)) {
       return res.status(403).json({ error: 'Cannot switch to staff view' });
     }
-    res.cookie('seedcoop-admin-demo-session', user.id, { httpOnly: true });
-    res.clearCookie('seedcoop-member-demo-session', { httpOnly: true });
+    res.cookie('bhcoop-admin-demo-session', user.id, { httpOnly: true });
+    res.clearCookie('bhcoop-member-demo-session', { httpOnly: true });
   } else {
     return res.status(400).json({ error: 'Invalid portal' });
   }
@@ -156,7 +156,7 @@ apiRouter.post('/auth/switch-portal', async (req, res) => {
 
 apiRouter.post('/auth/logout', (req, res) => {
   const { portal } = req.body;
-  const cookieName = portal === 'MEMBER' ? 'seedcoop-member-demo-session' : 'seedcoop-admin-demo-session';
+  const cookieName = portal === 'MEMBER' ? 'bhcoop-member-demo-session' : 'bhcoop-admin-demo-session';
   res.clearCookie(cookieName, { httpOnly: true, secure: true, sameSite: 'none' });
   res.json({ success: true });
 });
@@ -520,7 +520,7 @@ apiRouter.post('/admin/applications/:id/approve', async (req, res) => {
   if (application.status !== 'PENDING') return res.status(400).json({ error: 'Application is not pending' });
 
   const now = getUnixTime(new Date());
-  const membershipNumber = `SC-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
+  const membershipNumber = `BH-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
   const userId = uuidv4();
   const memberId = uuidv4();
 
@@ -528,7 +528,7 @@ apiRouter.post('/admin/applications/:id/approve', async (req, res) => {
   await db.insert(schema.users).values({
     id: userId,
     email: application.email,
-    passwordHash: 'demo123',
+    passwordHash: 'blessedhands',
     role: 'MEMBER',
     createdAt: now,
     updatedAt: now
@@ -569,7 +569,7 @@ apiRouter.post('/admin/applications/:id/approve', async (req, res) => {
     id: uuidv4(),
     recipient: application.email,
     template: 'MEMBERSHIP_APPROVED',
-    subject: 'Welcome to SeedCoop',
+    subject: 'Welcome to Blessed Hands',
     payload: JSON.stringify({ membershipNumber }),
     sentAt: now
   });

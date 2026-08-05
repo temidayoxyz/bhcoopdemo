@@ -230,51 +230,53 @@ export async function seedDefaultData() {
   const adminId = uuidv4();
   const treasurerId = uuidv4();
   const opsAdminId = uuidv4();
+  const demoPassword = 'blessedhands';
+
   await db.insert(schema.users).values([
-    { id: adminId, email: 'admin@seedcoop.demo', passwordHash: 'demo123', role: 'SUPER_ADMIN', createdAt: now, updatedAt: now },
-    { id: treasurerId, email: 'treasurer@seedcoop.demo', passwordHash: 'demo123', role: 'TREASURER', createdAt: now, updatedAt: now },
-    { id: opsAdminId, email: 'ops@seedcoop.demo', passwordHash: 'demo123', role: 'ADMIN', createdAt: now, updatedAt: now },
+    { id: adminId, email: 'admin@blessedhands.ng', passwordHash: demoPassword, role: 'SUPER_ADMIN', createdAt: now, updatedAt: now },
+    { id: treasurerId, email: 'treasurer@blessedhands.ng', passwordHash: demoPassword, role: 'FINANCIAL_SECRETARY', createdAt: now, updatedAt: now },
+    { id: opsAdminId, email: 'ops@blessedhands.ng', passwordHash: demoPassword, role: 'ADMIN', createdAt: now, updatedAt: now },
   ]);
 
-  const johnUserId = uuidv4();
+  const adaUserId = uuidv4();
   const chidiUserId = uuidv4();
   const temidayoUserId = uuidv4();
 
   await db.insert(schema.users).values([
-    { id: johnUserId, email: 'john@seedcoop.demo', passwordHash: 'demo123', role: 'MEMBER', createdAt: now, updatedAt: now },
-    { id: chidiUserId, email: 'chidi@seedcoop.demo', passwordHash: 'demo123', role: 'MEMBER', createdAt: now, updatedAt: now },
-    { id: temidayoUserId, email: 'temidayo@seedcoop.demo', passwordHash: 'demo123', role: 'MEMBER', createdAt: now, updatedAt: now },
+    { id: adaUserId, email: 'ada.okonkwo@blessedhands.ng', passwordHash: demoPassword, role: 'MEMBER', createdAt: now, updatedAt: now },
+    { id: chidiUserId, email: 'chidi.okafor@blessedhands.ng', passwordHash: demoPassword, role: 'MEMBER', createdAt: now, updatedAt: now },
+    { id: temidayoUserId, email: 'temidayo.adebayo@blessedhands.ng', passwordHash: demoPassword, role: 'MEMBER', createdAt: now, updatedAt: now },
   ]);
 
-  const johnMemberId = uuidv4();
+  const adaMemberId = uuidv4();
   const chidiMemberId = uuidv4();
   const temidayoMemberId = uuidv4();
 
-  // Staff dual-identity member profiles + pure members
+  // Staff dual-identity member profiles + pure members (BH-001… membership numbers)
   await db.insert(schema.members).values([
     {
-      id: uuidv4(), userId: adminId, membershipNumber: 'SC-008', firstName: 'Dan', lastName: 'Segun', phoneNumber: '+2348010000008',
+      id: uuidv4(), userId: adminId, membershipNumber: 'BH-001', firstName: 'Dan', lastName: 'Segun', phoneNumber: '+2348010000001',
       status: 'ACTIVE', totalContributionsKobo: 72000000, joinedAt: getUnixTime(subMonths(new Date(now * 1000), 36))
     },
     {
-      id: uuidv4(), userId: treasurerId, membershipNumber: 'SC-009', firstName: 'Tunde', lastName: 'Bakare', phoneNumber: '+2348010000009',
+      id: uuidv4(), userId: treasurerId, membershipNumber: 'BH-002', firstName: 'Tunde', lastName: 'Bakare', phoneNumber: '+2348010000002',
       status: 'ACTIVE', totalContributionsKobo: 60000000, joinedAt: getUnixTime(subMonths(new Date(now * 1000), 30))
     },
     {
-      id: uuidv4(), userId: opsAdminId, membershipNumber: 'SC-010', firstName: 'Ola', lastName: 'Dayo', phoneNumber: '+2348010000010',
+      id: uuidv4(), userId: opsAdminId, membershipNumber: 'BH-003', firstName: 'Ola', lastName: 'Dayo', phoneNumber: '+2348010000003',
       status: 'ACTIVE', totalContributionsKobo: 48000000, joinedAt: getUnixTime(subMonths(new Date(now * 1000), 24))
     },
     {
-      id: johnMemberId, userId: johnUserId, membershipNumber: 'SC-10042', firstName: 'John', lastName: 'Doe', phoneNumber: '+2348001234567',
-      status: 'ACTIVE', totalContributionsKobo: 12000000, joinedAt: getUnixTime(subMonths(new Date(now * 1000), 6))
+      id: adaMemberId, userId: adaUserId, membershipNumber: 'BH-004', firstName: 'Ada', lastName: 'Okonkwo', phoneNumber: '+2348010000004',
+      status: 'ACTIVE', totalContributionsKobo: 36000000, joinedAt: getUnixTime(subMonths(new Date(now * 1000), 18))
     },
     {
-      id: chidiMemberId, userId: chidiUserId, membershipNumber: 'SC-2026-002', firstName: 'Chidi', lastName: 'Okafor', phoneNumber: '+2348023456789',
-      status: 'ACTIVE', totalContributionsKobo: 24000000, joinedAt: getUnixTime(subMonths(new Date(now * 1000), 12))
+      id: chidiMemberId, userId: chidiUserId, membershipNumber: 'BH-005', firstName: 'Chidi', lastName: 'Okafor', phoneNumber: '+2348010000005',
+      status: 'ACTIVE', totalContributionsKobo: 48000000, joinedAt: getUnixTime(subMonths(new Date(now * 1000), 24))
     },
     {
-      id: temidayoMemberId, userId: temidayoUserId, membershipNumber: 'SC-2026-003', firstName: 'Temidayo', lastName: 'Adebayo', phoneNumber: '+2348034567890',
-      status: 'ACTIVE', totalContributionsKobo: 5000000, joinedAt: getUnixTime(subMonths(new Date(now * 1000), 2))
+      id: temidayoMemberId, userId: temidayoUserId, membershipNumber: 'BH-006', firstName: 'Temidayo', lastName: 'Adebayo', phoneNumber: '+2348010000006',
+      status: 'ACTIVE', totalContributionsKobo: 8000000, joinedAt: getUnixTime(subMonths(new Date(now * 1000), 8))
     }
   ]);
 
@@ -299,19 +301,19 @@ export async function seedDefaultData() {
 
   await db.insert(schema.announcements).values([
     { id: uuidv4(), title: 'Annual General Meeting', content: 'Our upcoming AGM will hold on the 15th of next month. All active members are expected.', audience: 'MEMBER', publishedAt: getUnixTime(subMonths(new Date(now * 1000), 1)) },
-    { id: uuidv4(), title: 'Welcome to SeedCoop', content: 'We are excited to launch our new digital cooperative platform.', audience: 'PUBLIC', publishedAt: getUnixTime(subMonths(new Date(now * 1000), 2)) }
+    { id: uuidv4(), title: 'Welcome to Blessed Hands', content: 'We are excited to launch our new digital cooperative platform.', audience: 'PUBLIC', publishedAt: getUnixTime(subMonths(new Date(now * 1000), 2)) }
   ]);
 
-  // Contribution Obligations for John Doe
+  // Contribution obligations for Ada Okonkwo (BH-004)
   await db.insert(schema.contributionObligations).values([
-    { id: uuidv4(), memberId: johnMemberId, monthPeriod: '2026-07', expectedAmountKobo: 2000000, paidAmountKobo: 0, status: 'UNPAID', dueDate: now + 86400 * 7 },
-    { id: uuidv4(), memberId: johnMemberId, monthPeriod: '2026-06', expectedAmountKobo: 2000000, paidAmountKobo: 2000000, status: 'PAID', dueDate: now - 86400 * 25 },
-    { id: uuidv4(), memberId: johnMemberId, monthPeriod: '2026-05', expectedAmountKobo: 2000000, paidAmountKobo: 2000000, status: 'PAID', dueDate: now - 86400 * 55 },
+    { id: uuidv4(), memberId: adaMemberId, monthPeriod: '2026-07', expectedAmountKobo: 2000000, paidAmountKobo: 0, status: 'UNPAID', dueDate: now + 86400 * 7 },
+    { id: uuidv4(), memberId: adaMemberId, monthPeriod: '2026-06', expectedAmountKobo: 2000000, paidAmountKobo: 2000000, status: 'PAID', dueDate: now - 86400 * 25 },
+    { id: uuidv4(), memberId: adaMemberId, monthPeriod: '2026-05', expectedAmountKobo: 2000000, paidAmountKobo: 2000000, status: 'PAID', dueDate: now - 86400 * 55 },
   ]);
 
   // Demo email outbox records
   await db.insert(schema.demoEmailOutbox).values([
-    { id: uuidv4(), recipient: 'john@seedcoop.demo', template: 'WELCOME', subject: 'Welcome to SeedCoop Cooperative', payload: JSON.stringify({ name: 'John Doe', membershipNumber: 'SC-10042' }), sentAt: now - 86400 * 30 },
-    { id: uuidv4(), recipient: 'john@seedcoop.demo', template: 'CONTRIBUTION_DUE', subject: 'July 2026 Monthly Contribution Reminder', payload: JSON.stringify({ amountKobo: 2000000 }), sentAt: now - 86400 * 3 }
+    { id: uuidv4(), recipient: 'ada.okonkwo@blessedhands.ng', template: 'WELCOME', subject: 'Welcome to Blessed Hands', payload: JSON.stringify({ name: 'Ada Okonkwo', membershipNumber: 'BH-004' }), sentAt: now - 86400 * 30 },
+    { id: uuidv4(), recipient: 'ada.okonkwo@blessedhands.ng', template: 'CONTRIBUTION_DUE', subject: 'July 2026 Monthly Savings Reminder', payload: JSON.stringify({ amountKobo: 2000000 }), sentAt: now - 86400 * 3 }
   ]);
 }

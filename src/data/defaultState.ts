@@ -5,7 +5,7 @@
 
 import { sideForType } from '../lib/money';
 
-const PASSWORD = 'seedcoop';
+const PASSWORD = 'blessedhands';
 
 function uid(prefix: string, n: number) {
   return `${prefix}-${String(n).padStart(4, '0')}`;
@@ -40,21 +40,21 @@ export function createDefaultState() {
   const treasurerUserId = uid('user', 2);
   const opsAdminUserId = uid('user', 3);
 
-  // Staff first (SC-001 Super Admin). Referral code = membership number for everyone.
+  // Staff first (BH-001 Super Admin). Referral code = membership number for everyone.
   const staffMembers = [
-    { userId: adminUserId, memberId: uid('mem', 8), num: 'SC-001', first: 'Dan', middle: 'O.', last: 'Segun', email: 'admin@seedcoop.ng', phone: '+2348010000001', months: 36, savings: 72000000, shares: 10000000, residency: 'RESIDENT' as const, role: 'SUPER_ADMIN' as const },
-    { userId: treasurerUserId, memberId: uid('mem', 9), num: 'SC-002', first: 'Tunde', middle: 'A.', last: 'Bakare', email: 'treasurer@seedcoop.ng', phone: '+2348010000002', months: 30, savings: 60000000, shares: 8000000, residency: 'RESIDENT' as const, role: 'FINANCIAL_SECRETARY' as const },
-    { userId: opsAdminUserId, memberId: uid('mem', 10), num: 'SC-003', first: 'Ola', middle: 'K.', last: 'Dayo', email: 'ops@seedcoop.ng', phone: '+2348010000003', months: 24, savings: 48000000, shares: 6000000, residency: 'RESIDENT' as const, role: 'ADMIN' as const },
+    { userId: adminUserId, memberId: uid('mem', 8), num: 'BH-001', first: 'Dan', middle: 'O.', last: 'Segun', email: 'admin@blessedhands.ng', phone: '+2348010000001', months: 36, savings: 72000000, shares: 10000000, residency: 'RESIDENT' as const, role: 'SUPER_ADMIN' as const },
+    { userId: treasurerUserId, memberId: uid('mem', 9), num: 'BH-002', first: 'Tunde', middle: 'A.', last: 'Bakare', email: 'treasurer@blessedhands.ng', phone: '+2348010000002', months: 30, savings: 60000000, shares: 8000000, residency: 'RESIDENT' as const, role: 'FINANCIAL_SECRETARY' as const },
+    { userId: opsAdminUserId, memberId: uid('mem', 10), num: 'BH-003', first: 'Ola', middle: 'K.', last: 'Dayo', email: 'ops@blessedhands.ng', phone: '+2348010000003', months: 24, savings: 48000000, shares: 6000000, residency: 'RESIDENT' as const, role: 'ADMIN' as const },
   ];
 
   const m = [
-    { userId: uid('user', 11), memberId: uid('mem', 1), num: 'SC-004', first: 'Ada', middle: 'C.', last: 'Okonkwo', email: 'ada.okonkwo@seedcoop.ng', phone: '+2348010000004', months: 18, savings: 36000000, shares: 5000000, residency: 'RESIDENT' as const },
-    { userId: uid('user', 12), memberId: uid('mem', 2), num: 'SC-005', first: 'Chidi', middle: 'E.', last: 'Okafor', email: 'chidi.okafor@seedcoop.ng', phone: '+2348010000005', months: 24, savings: 48000000, shares: 6000000, residency: 'RESIDENT' as const },
-    { userId: uid('user', 13), memberId: uid('mem', 3), num: 'SC-006', first: 'Temidayo', middle: 'B.', last: 'Adebayo', email: 'temidayo.adebayo@seedcoop.ng', phone: '+2348010000006', months: 8, savings: 8000000, shares: 2000000, residency: 'RESIDENT' as const },
-    { userId: uid('user', 14), memberId: uid('mem', 4), num: 'SC-007', first: 'Fatima', middle: 'A.', last: 'Bello', email: 'fatima.bello@seedcoop.ng', phone: '+2348010000007', months: 14, savings: 28000000, shares: 4000000, residency: 'NON_RESIDENT' as const },
-    { userId: uid('user', 15), memberId: uid('mem', 5), num: 'SC-008', first: 'Emeka', middle: 'J.', last: 'Nwosu', email: 'emeka.nwosu@seedcoop.ng', phone: '+2348010000008', months: 10, savings: 20000000, shares: 3000000, residency: 'RESIDENT' as const },
-    { userId: uid('user', 16), memberId: uid('mem', 6), num: 'SC-009', first: 'Ngozi', middle: 'I.', last: 'Eze', email: 'ngozi.eze@seedcoop.ng', phone: '+2348010000009', months: 12, savings: 24000000, shares: 3500000, residency: 'RESIDENT' as const },
-    { userId: uid('user', 17), memberId: uid('mem', 7), num: 'SC-010', first: 'Ibrahim', middle: 'M.', last: 'Yusuf', email: 'ibrahim.yusuf@seedcoop.ng', phone: '+2348010000010', months: 2, savings: 4000000, shares: 0, residency: 'RESIDENT' as const },
+    { userId: uid('user', 11), memberId: uid('mem', 1), num: 'BH-004', first: 'Ada', middle: 'C.', last: 'Okonkwo', email: 'ada.okonkwo@blessedhands.ng', phone: '+2348010000004', months: 18, savings: 36000000, shares: 5000000, residency: 'RESIDENT' as const },
+    { userId: uid('user', 12), memberId: uid('mem', 2), num: 'BH-005', first: 'Chidi', middle: 'E.', last: 'Okafor', email: 'chidi.okafor@blessedhands.ng', phone: '+2348010000005', months: 24, savings: 48000000, shares: 6000000, residency: 'RESIDENT' as const },
+    { userId: uid('user', 13), memberId: uid('mem', 3), num: 'BH-006', first: 'Temidayo', middle: 'B.', last: 'Adebayo', email: 'temidayo.adebayo@blessedhands.ng', phone: '+2348010000006', months: 8, savings: 8000000, shares: 2000000, residency: 'RESIDENT' as const },
+    { userId: uid('user', 14), memberId: uid('mem', 4), num: 'BH-007', first: 'Fatima', middle: 'A.', last: 'Bello', email: 'fatima.bello@blessedhands.ng', phone: '+2348010000007', months: 14, savings: 28000000, shares: 4000000, residency: 'NON_RESIDENT' as const },
+    { userId: uid('user', 15), memberId: uid('mem', 5), num: 'BH-008', first: 'Emeka', middle: 'J.', last: 'Nwosu', email: 'emeka.nwosu@blessedhands.ng', phone: '+2348010000008', months: 10, savings: 20000000, shares: 3000000, residency: 'RESIDENT' as const },
+    { userId: uid('user', 16), memberId: uid('mem', 6), num: 'BH-009', first: 'Ngozi', middle: 'I.', last: 'Eze', email: 'ngozi.eze@blessedhands.ng', phone: '+2348010000009', months: 12, savings: 24000000, shares: 3500000, residency: 'RESIDENT' as const },
+    { userId: uid('user', 17), memberId: uid('mem', 7), num: 'BH-010', first: 'Ibrahim', middle: 'M.', last: 'Yusuf', email: 'ibrahim.yusuf@blessedhands.ng', phone: '+2348010000010', months: 2, savings: 4000000, shares: 0, residency: 'RESIDENT' as const },
   ];
 
   const users = [
@@ -121,7 +121,7 @@ export function createDefaultState() {
       status: 'ACTIVE',
       residency: x.residency,
       referralCode: x.num, // referral code = member code
-      referredByCode: 'SC-001' as string | null,
+      referredByCode: 'BH-001' as string | null,
       totalContributionsKobo: x.savings,
       depositBalanceKobo: walletByMember[x.memberId] ?? 0,
       sharesBalanceKobo: x.shares,
@@ -133,22 +133,22 @@ export function createDefaultState() {
 
   // Varied contribution states for current cycle
   const obligations = [
-    // SC-001 fully paid this + prior months
+    // BH-001 fully paid this + prior months
     { id: uid('ob', 1), memberId: m[0].memberId, monthPeriod: period0, expectedAmountKobo: monthly, paidAmountKobo: monthly, status: 'PAID', dueDate: daysFromNow(5) },
     { id: uid('ob', 2), memberId: m[0].memberId, monthPeriod: period1, expectedAmountKobo: monthly, paidAmountKobo: monthly, status: 'PAID', dueDate: daysFromNow(-25) },
-    // SC-002 partial current
+    // BH-002 partial current
     { id: uid('ob', 3), memberId: m[1].memberId, monthPeriod: period0, expectedAmountKobo: monthly, paidAmountKobo: 1000000, status: 'PARTIAL', dueDate: daysFromNow(5) },
     { id: uid('ob', 4), memberId: m[1].memberId, monthPeriod: period1, expectedAmountKobo: monthly, paidAmountKobo: monthly, status: 'PAID', dueDate: daysFromNow(-25) },
-    // SC-003 unpaid / arrears
+    // BH-003 unpaid / arrears
     { id: uid('ob', 5), memberId: m[2].memberId, monthPeriod: period0, expectedAmountKobo: monthly, paidAmountKobo: 0, status: 'UNPAID', dueDate: daysFromNow(5) },
     { id: uid('ob', 6), memberId: m[2].memberId, monthPeriod: period1, expectedAmountKobo: monthly, paidAmountKobo: 0, status: 'OVERDUE', dueDate: daysFromNow(-25) },
-    // SC-004 paid
+    // BH-004 paid
     { id: uid('ob', 7), memberId: m[3].memberId, monthPeriod: period0, expectedAmountKobo: monthly, paidAmountKobo: monthly, status: 'PAID', dueDate: daysFromNow(5) },
-    // SC-005 paid
+    // BH-005 paid
     { id: uid('ob', 8), memberId: m[4].memberId, monthPeriod: period0, expectedAmountKobo: monthly, paidAmountKobo: monthly, status: 'PAID', dueDate: daysFromNow(5) },
-    // SC-006 paid
+    // BH-006 paid
     { id: uid('ob', 9), memberId: m[5].memberId, monthPeriod: period0, expectedAmountKobo: monthly, paidAmountKobo: monthly, status: 'PAID', dueDate: daysFromNow(5) },
-    // SC-007 new — first obligation unpaid
+    // BH-007 new — first obligation unpaid
     { id: uid('ob', 10), memberId: m[6].memberId, monthPeriod: period0, expectedAmountKobo: monthly, paidAmountKobo: 0, status: 'UNPAID', dueDate: daysFromNow(5) },
     { id: uid('ob', 11), memberId: m[6].memberId, monthPeriod: period1, expectedAmountKobo: monthly, paidAmountKobo: monthly, status: 'PAID', dueDate: daysFromNow(-20) },
     // Staff members — paid thrift (they're members first)
@@ -174,11 +174,11 @@ export function createDefaultState() {
   const trialChidiId = uid('loan', 10);
   const trialFatimaId = uid('loan', 11);
   const trialEmekaId = uid('loan', 12);
-  // SC-002 active emergency mid-repayment
+  // BH-002 active emergency mid-repayment
   const loanChidiId = uid('loan', 1);
-  // SC-004 active normal nearly complete
+  // BH-004 active normal nearly complete
   const loanFatimaId = uid('loan', 2);
-  // SC-005 normal pending triple approval (FS step)
+  // BH-005 normal pending triple approval (FS step)
   const loanEmekaId = uid('loan', 3);
 
   const emptyApproval = (step: string) => ({
@@ -302,7 +302,7 @@ export function createDefaultState() {
   const orders = [
     {
       id: uid('ord', 1),
-      memberId: m[0].memberId, // Ada SC-001
+      memberId: m[0].memberId, // Ada BH-001
       reference: 'ORD-2026-1001',
       status: 'FULFILLED',
       totalKobo: 1700000,
@@ -313,7 +313,7 @@ export function createDefaultState() {
     },
     {
       id: uid('ord', 2),
-      memberId: m[2].memberId, // Temidayo SC-003
+      memberId: m[2].memberId, // Temidayo BH-003
       reference: 'ORD-2026-1002',
       status: 'PLACED',
       totalKobo: 600000,
@@ -329,7 +329,7 @@ export function createDefaultState() {
     { id: uid('oi', 2), orderId: uid('ord', 2), productId: uid('mkt', 5), productName: 'Organic Manure', unitPriceKobo: 600000, quantity: 1 },
   ];
 
-  // SC-006 completed deposit-wallet withdrawal (instant — no staff approval)
+  // BH-006 completed deposit-wallet withdrawal (instant — no staff approval)
   const fundRequests = [
     {
       id: uid('fund', 1),
@@ -370,7 +370,7 @@ export function createDefaultState() {
       lastName: 'Adeyemi',
       email: 'blessing.adeyemi@email.com',
       phoneNumber: '+2348099001122',
-      referralCodeUsed: 'SC-001',
+      referralCodeUsed: 'BH-001',
       status: 'PENDING_APPROVAL',
       regFeeDueAt: daysFromNow(4),
       regFeePaidAt: daysFromNow(-2),
@@ -402,7 +402,7 @@ export function createDefaultState() {
       lastName: 'Balogun',
       email: 'kemi.balogun@email.com',
       phoneNumber: '+2348088112233',
-      referralCodeUsed: 'SC-004',
+      referralCodeUsed: 'BH-004',
       status: 'AWAITING_KYM',
       regFeeDueAt: daysFromNow(5),
       regFeePaidAt: daysFromNow(-1),
@@ -460,22 +460,22 @@ export function createDefaultState() {
   }
 
   const ledger = [
-    ledgerRow(uid('tx', 1), 'PAY-2026-1101', 'CONTRIBUTION_PAYMENT', monthly, monthsAgo(1), `Monthly savings ${period1} — SC-004`, m[0].memberId),
-    ledgerRow(uid('tx', 2), 'PAY-2026-1102', 'CONTRIBUTION_PAYMENT', monthly, monthsAgo(1), `Monthly savings ${period1} — SC-005`, m[1].memberId),
-    ledgerRow(uid('tx', 3), 'DEP-2026-1001', 'DEPOSIT', 10000000, monthsAgo(2), 'Deposit wallet top-up — SC-004', m[0].memberId),
-    ledgerRow(uid('tx', 4), 'DISB-2026-2002', 'LOAN_DISBURSEMENT', 20000000, monthsAgo(3), 'Emergency loan disbursement — SC-005', m[1].memberId),
-    ledgerRow(uid('tx', 5), 'REP-2026-2201', 'LOAN_REPAYMENT', 3500000, monthsAgo(2), 'Loan repayment LN-2026-2002 — SC-005', m[1].memberId),
-    ledgerRow(uid('tx', 6), 'REP-2026-2202', 'LOAN_REPAYMENT', 3500000, monthsAgo(1), 'Loan repayment LN-2026-2002 — SC-005', m[1].memberId),
-    ledgerRow(uid('tx', 7), 'DISB-2026-2004', 'LOAN_DISBURSEMENT', 30000000, monthsAgo(9), 'Normal loan disbursement — SC-007', m[3].memberId),
-    ledgerRow(uid('tx', 15), 'WDL-2026-6001', 'DEPOSIT_WITHDRAWAL', 5000000, daysFromNow(-2), 'Deposit wallet withdrawal — SC-009', m[5].memberId),
-    ledgerRow(uid('tx', 16), 'SHR-2026-0001', 'DEPOSIT_TO_SHARES', 5000000, monthsAgo(12), 'Share capital purchase — SC-004', m[0].memberId),
-    ledgerRow(uid('tx', 8), 'REP-2026-2401', 'LOAN_REPAYMENT', 28000000, monthsAgo(1), 'Loan repayments (cumulative) — SC-007', m[3].memberId),
-    ledgerRow(uid('tx', 9), 'PAY-2026-1107', 'CONTRIBUTION_PAYMENT', monthly, monthsAgo(1), `Monthly savings ${period1} — SC-010`, m[6].memberId),
+    ledgerRow(uid('tx', 1), 'PAY-2026-1101', 'CONTRIBUTION_PAYMENT', monthly, monthsAgo(1), `Monthly savings ${period1} — BH-004`, m[0].memberId),
+    ledgerRow(uid('tx', 2), 'PAY-2026-1102', 'CONTRIBUTION_PAYMENT', monthly, monthsAgo(1), `Monthly savings ${period1} — BH-005`, m[1].memberId),
+    ledgerRow(uid('tx', 3), 'DEP-2026-1001', 'DEPOSIT', 10000000, monthsAgo(2), 'Deposit wallet top-up — BH-004', m[0].memberId),
+    ledgerRow(uid('tx', 4), 'DISB-2026-2002', 'LOAN_DISBURSEMENT', 20000000, monthsAgo(3), 'Emergency loan disbursement — BH-005', m[1].memberId),
+    ledgerRow(uid('tx', 5), 'REP-2026-2201', 'LOAN_REPAYMENT', 3500000, monthsAgo(2), 'Loan repayment LN-2026-2002 — BH-005', m[1].memberId),
+    ledgerRow(uid('tx', 6), 'REP-2026-2202', 'LOAN_REPAYMENT', 3500000, monthsAgo(1), 'Loan repayment LN-2026-2002 — BH-005', m[1].memberId),
+    ledgerRow(uid('tx', 7), 'DISB-2026-2004', 'LOAN_DISBURSEMENT', 30000000, monthsAgo(9), 'Normal loan disbursement — BH-007', m[3].memberId),
+    ledgerRow(uid('tx', 15), 'WDL-2026-6001', 'DEPOSIT_WITHDRAWAL', 5000000, daysFromNow(-2), 'Deposit wallet withdrawal — BH-009', m[5].memberId),
+    ledgerRow(uid('tx', 16), 'SHR-2026-0001', 'DEPOSIT_TO_SHARES', 5000000, monthsAgo(12), 'Share capital purchase — BH-004', m[0].memberId),
+    ledgerRow(uid('tx', 8), 'REP-2026-2401', 'LOAN_REPAYMENT', 28000000, monthsAgo(1), 'Loan repayments (cumulative) — BH-007', m[3].memberId),
+    ledgerRow(uid('tx', 9), 'PAY-2026-1107', 'CONTRIBUTION_PAYMENT', monthly, monthsAgo(1), `Monthly savings ${period1} — BH-010`, m[6].memberId),
     ledgerRow(uid('tx', 10), 'INV-2026-0101', 'INVESTMENT_PURCHASE', 50000000, monthsAgo(6), 'Treasury bill placement — FGN 91-day', null),
     ledgerRow(uid('tx', 11), 'INV-2026-0102', 'INVESTMENT_RETURN', 2500000, monthsAgo(3), 'Investment return — FGN 91-day', null),
     ledgerRow(uid('tx', 12), 'DIV-2025-0001', 'DIVIDEND_PAYOUT', 7000000, monthsAgo(4), '2025 surplus dividend allocation', null),
-    ledgerRow(uid('tx', 13), 'MKT-2026-1001', 'MARKET_PURCHASE', 1700000, monthsAgo(1), 'Market purchase ORD-2026-1001 (2 items) — SC-004', m[0].memberId),
-    ledgerRow(uid('tx', 14), 'MKT-2026-1002', 'MARKET_PURCHASE', 600000, daysFromNow(-1), 'Market purchase ORD-2026-1002 (1 item) — SC-006', m[2].memberId),
+    ledgerRow(uid('tx', 13), 'MKT-2026-1001', 'MARKET_PURCHASE', 1700000, monthsAgo(1), 'Market purchase ORD-2026-1001 (2 items) — BH-004', m[0].memberId),
+    ledgerRow(uid('tx', 14), 'MKT-2026-1002', 'MARKET_PURCHASE', 600000, daysFromNow(-1), 'Market purchase ORD-2026-1002 (1 item) — BH-006', m[2].memberId),
   ];
 
   const investments = [
@@ -568,8 +568,8 @@ export function createDefaultState() {
     },
     {
       id: uid('ann', 3),
-      title: 'Welcome to SeedCoop',
-      content: 'SeedCoop is a member-owned thrift and credit cooperative. Join to save, access fair credit, and share in collective growth.',
+      title: 'Welcome to Blessed Hands',
+      content: 'Blessed Hands is a member-owned thrift and credit cooperative. Join to save, access fair credit, and share in collective growth.',
       audience: 'PUBLIC',
       publishedAt: monthsAgo(6),
     },
@@ -580,9 +580,9 @@ export function createDefaultState() {
       id: uid('mail', 1),
       recipient: m[0].email,
       template: 'WELCOME',
-      subject: 'Welcome to SeedCoop — membership confirmed',
-      payload: JSON.stringify({ name: 'Ada Okonkwo', membershipNumber: 'SC-004' }),
-      body: 'Dear Ada, your membership SC-004 is active. Monthly savings is ₦20,000.',
+      subject: 'Welcome to Blessed Hands — membership confirmed',
+      payload: JSON.stringify({ name: 'Ada Okonkwo', membershipNumber: 'BH-004' }),
+      body: 'Dear Ada, your membership BH-004 is active. Monthly savings is ₦20,000.',
       sentAt: monthsAgo(18),
     },
     {
@@ -648,7 +648,7 @@ export function createDefaultState() {
       actorRole: 'SUPER_ADMIN',
       action: 'SYSTEM_INIT',
       entityType: 'COOPERATIVE',
-      entityReference: 'SEEDCOOP',
+      entityReference: 'BLESSEDHANDS',
       timestamp: monthsAgo(24),
       summary: 'Cooperative platform initialised',
     },
@@ -684,9 +684,9 @@ export function createDefaultState() {
     // Personas rebuilt live in mockApi; seed keeps a snapshot for reference
     personas: {
       staff: [
-        { email: 'admin@seedcoop.ng', role: 'SUPER_ADMIN', label: 'Dan Segun', subtitle: 'Super Admin', portal: 'ADMIN' as const, membershipNumber: 'SC-001', tagline: 'Staff · also member SC-001 · referral SC-001' },
-        { email: 'ops@seedcoop.ng', role: 'ADMIN', label: 'Ola Dayo', subtitle: 'Admin', portal: 'ADMIN' as const, membershipNumber: 'SC-003', tagline: 'Staff · also member SC-003 · switch portals anytime' },
-        { email: 'treasurer@seedcoop.ng', role: 'FINANCIAL_SECRETARY', label: 'Tunde Bakare', subtitle: 'Financial Secretary', portal: 'ADMIN' as const, membershipNumber: 'SC-002', tagline: 'Staff · also member SC-002 · switch portals anytime' },
+        { email: 'admin@blessedhands.ng', role: 'SUPER_ADMIN', label: 'Dan Segun', subtitle: 'Super Admin', portal: 'ADMIN' as const, membershipNumber: 'BH-001', tagline: 'Staff · also member BH-001 · referral BH-001' },
+        { email: 'ops@blessedhands.ng', role: 'ADMIN', label: 'Ola Dayo', subtitle: 'Admin', portal: 'ADMIN' as const, membershipNumber: 'BH-003', tagline: 'Staff · also member BH-003 · switch portals anytime' },
+        { email: 'treasurer@blessedhands.ng', role: 'FINANCIAL_SECRETARY', label: 'Tunde Bakare', subtitle: 'Financial Secretary', portal: 'ADMIN' as const, membershipNumber: 'BH-002', tagline: 'Staff · also member BH-002 · switch portals anytime' },
       ],
       members: m.map((x) => ({
         email: x.email,
@@ -703,16 +703,16 @@ export function createDefaultState() {
 
 function memberTagline(num: string): string {
   switch (num) {
-    case 'SC-001': return 'Super Admin · Strong thrift · Referral code SC-001';
-    case 'SC-002': return 'Financial Secretary · Strong thrift';
-    case 'SC-003': return 'Admin · Strong thrift';
-    case 'SC-004': return 'Fully paid · Strong thrift · Shares met · No active loan';
-    case 'SC-005': return 'Partial dues · Active emergency loan · Trial clean';
-    case 'SC-006': return 'Arrears · Loan restricted · Dev fee unpaid';
-    case 'SC-007': return 'Normal loan nearly complete · Non-resident';
-    case 'SC-008': return 'Normal loan awaiting FS approval';
-    case 'SC-009': return 'Recent deposit withdrawal';
-    case 'SC-010': return 'New member · Needs minimum shares · Trial available';
+    case 'BH-001': return 'Super Admin · Strong thrift · Referral code BH-001';
+    case 'BH-002': return 'Financial Secretary · Strong thrift';
+    case 'BH-003': return 'Admin · Strong thrift';
+    case 'BH-004': return 'Fully paid · Strong thrift · Shares met · No active loan';
+    case 'BH-005': return 'Partial dues · Active emergency loan · Trial clean';
+    case 'BH-006': return 'Arrears · Loan restricted · Dev fee unpaid';
+    case 'BH-007': return 'Normal loan nearly complete · Non-resident';
+    case 'BH-008': return 'Normal loan awaiting FS approval';
+    case 'BH-009': return 'Recent deposit withdrawal';
+    case 'BH-010': return 'New member · Needs minimum shares · Trial available';
     default: return 'Active member';
   }
 }

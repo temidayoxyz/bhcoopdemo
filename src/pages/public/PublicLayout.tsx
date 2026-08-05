@@ -12,7 +12,7 @@ export function PublicLayout() {
                   <div className="absolute inset-0 rounded-full border border-gold-500 scale-150"></div>
                 </div>
               </div>
-              <span className="font-semibold text-lg tracking-tight text-seed-950">SeedCoop</span>
+              <span className="font-semibold text-lg tracking-tight text-seed-950">Blessed Hands</span>
             </Link>
           </div>
           <nav className="hidden md:flex gap-6">
@@ -36,7 +36,7 @@ export function PublicLayout() {
               <div className="w-6 h-6 rounded-full bg-ivory-50 flex items-center justify-center">
                 <div className="w-1.5 h-1.5 rounded-full bg-seed-950"></div>
               </div>
-              <span className="font-semibold tracking-tight text-ivory-50">SeedCoop</span>
+              <span className="font-semibold tracking-tight text-ivory-50">Blessed Hands</span>
             </div>
             <p className="text-sm text-seed-200">Shared growth, made visible. A modern cooperative platform.</p>
           </div>
@@ -59,7 +59,7 @@ export function PublicLayout() {
           <div>
             <h3 className="font-medium mb-4 text-ivory-50">Contact</h3>
             <ul className="space-y-2 text-sm text-seed-200">
-              <li>contact@seedcoop.ng</li>
+              <li>contact@blessedhands.ng</li>
               <li>+234 800 000 0000</li>
               <li className="mt-4 text-xs opacity-75">Member-owned thrift & credit cooperative.</li>
             </ul>
