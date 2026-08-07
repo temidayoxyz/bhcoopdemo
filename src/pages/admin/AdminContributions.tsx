@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import { useOutletContext } from 'react-router-dom';
 import { Coins, Plus, Search, CheckCircle2 } from 'lucide-react';
 import { toast } from 'sonner';
+import { can } from '../../lib/roles';
 
 export function AdminContributions() {
+  const { user } = useOutletContext<{ user: any }>();
+  const canWrite = can(user?.role, 'contributions:write');
   const [data, setData] = useState<{
     members: any[];
     ledger: any[];
@@ -62,6 +66,8 @@ export function AdminContributions() {
           memberId: selectedMemberId,
           amountKobo,
           description: description || 'Monthly savings',
+          // Target the current period so the member's obligation flips to PAID
+          monthPeriod: data.currentPeriod,
         }),
       });
       const resData = await res.json();
@@ -116,12 +122,14 @@ export function AdminContributions() {
               ₦{(totalCoopSavingsKobo / 100).toLocaleString()}
             </span>
           </div>
-          <button
-            onClick={() => setIsModalOpen(true)}
-            className="bg-seed-800 text-white px-4 py-2.5 rounded-[10px] font-medium hover:bg-seed-700 transition-colors text-sm flex items-center gap-2 shadow-sm"
-          >
-            <Plus className="w-4 h-4" /> Record savings
-          </button>
+          {canWrite && (
+            <button
+              onClick={() => setIsModalOpen(true)}
+              className="bg-seed-800 text-white px-4 py-2.5 rounded-[10px] font-medium hover:bg-seed-700 transition-colors text-sm flex items-center gap-2 shadow-sm"
+            >
+              <Plus className="w-4 h-4" /> Record savings
+            </button>
+          )}
         </div>
       </header>
 

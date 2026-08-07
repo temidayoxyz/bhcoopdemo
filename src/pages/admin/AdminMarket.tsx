@@ -83,6 +83,7 @@ export function AdminMarket() {
       if (data.success) {
         toast.success(editing ? 'Product updated' : 'Product created');
         setForm(EMPTY_FORM);
+        setEditing(null);
         fetchProducts();
       } else toast.error(data.error || 'Save failed');
     } catch {

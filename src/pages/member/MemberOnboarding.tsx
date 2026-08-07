@@ -1,13 +1,20 @@
-import { useEffect, useState, type FormEvent } from 'react';
+import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import { MoneyText } from '../../components/money/MoneyText';
 import { ID_TYPES, SALARY_RANGES } from '../../lib/coop/constants';
 
+// The member tab remembers which applicant it is tracking so it can keep
+// polling even after a staff member signs in on this device (shared session).
+const APPLICANT_KEY = 'bhcoop-onboarding-applicant';
+
 export function MemberOnboarding() {
   const navigate = useNavigate();
   const [data, setData] = useState<any>(null);
   const [busy, setBusy] = useState(false);
+  const applicantIdRef = useRef<string | null>(
+    sessionStorage.getItem(APPLICANT_KEY),
+  );
   const [kym, setKym] = useState({
     legalName: '',
     idType: 'NATIONAL_ID',
@@ -25,6 +32,11 @@ export function MemberOnboarding() {
 
   const applyPayload = (d: any) => {
     setData(d);
+    const applicantId = (d as any).applicantId || d?.application?.userId || null;
+    if (applicantId && applicantId !== applicantIdRef.current) {
+      applicantIdRef.current = applicantId;
+      sessionStorage.setItem(APPLICANT_KEY, applicantId);
+    }
     if (d.application) {
       setKym((prev) => ({
         ...prev,
@@ -35,8 +47,13 @@ export function MemberOnboarding() {
     }
   };
 
+  const onboardingUrl = () => {
+    const id = applicantIdRef.current;
+    return id ? `/api/members/onboarding?applicantId=${encodeURIComponent(id)}` : '/api/members/onboarding';
+  };
+
   const load = () =>
-    fetch('/api/members/onboarding')
+    fetch(onboardingUrl())
       .then((r) => r.json())
       .then((d) => applyPayload(d))
       .catch(() => toast.error('Could not load onboarding status'));
@@ -44,15 +61,32 @@ export function MemberOnboarding() {
   useEffect(() => {
     load();
     const id = window.setInterval(() => {
-      fetch('/api/members/onboarding')
+      fetch(onboardingUrl())
         .then((r) => r.json())
         .then((d) => applyPayload(d))
         .catch(() => {});
     }, 4000);
     return () => window.clearInterval(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const goDashboard = () => {
+  const goDashboard = async () => {
+    // A staff session is active on this device — this tab is not signed in as
+    // the member, so send them to sign in (login will route to the welcome).
+    if (data?.signedInAsApplicant === false) {
+      toast.info('Sign in as the member to open your dashboard');
+      navigate('/login');
+      return;
+    }
+    try {
+      await fetch('/api/members/onboarding/welcome-seen', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ applicantId: applicantIdRef.current }),
+      });
+    } catch {
+      /* non-fatal — welcome just shows again next sign-in */
+    }
     const dest = data?.redirectTo || '/member/dashboard';
     toast.success(
       data?.member?.membershipNumber
@@ -103,6 +137,30 @@ export function MemberOnboarding() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-ivory-50">
         Loading onboarding…
+      </div>
+    );
+  }
+
+  if (data.error) {
+    return (
+      <div className="min-h-screen bg-ivory-50 py-10 px-4">
+        <div className="max-w-2xl mx-auto">
+          <div className="bg-white border border-ink-200 rounded-[14px] p-8 text-center space-y-4">
+            <h2 className="text-xl font-semibold text-seed-950">Sign in to continue</h2>
+            <p className="text-ink-600">
+              {data.error === 'Unauthorized'
+                ? 'Your session changed or expired — sign in again to continue onboarding.'
+                : data.error}
+            </p>
+            <button
+              type="button"
+              onClick={() => navigate('/login')}
+              className="bg-seed-800 text-white px-8 py-3 rounded-[10px] font-semibold hover:bg-seed-700"
+            >
+              Sign in
+            </button>
+          </div>
+        </div>
       </div>
     );
   }
@@ -305,7 +363,9 @@ export function MemberOnboarding() {
               onClick={goDashboard}
               className="w-full sm:w-auto bg-seed-800 text-white px-8 py-3 rounded-[10px] font-semibold hover:bg-seed-700"
             >
-              Go to dashboard
+              {data.signedInAsApplicant === false
+                ? 'Sign in to open dashboard'
+                : 'Go to dashboard'}
             </button>
             <p className="text-xs text-ink-500">
               Or sign in anytime from the login page with your email and password.

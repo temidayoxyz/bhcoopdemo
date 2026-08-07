@@ -32,7 +32,9 @@ export function AdminInvestments() {
     });
     const d = await res.json();
     if (d.success) {
-      toast.success(`Investment booked · ${d.reference}`);
+      toast.success(
+        d.message || `Investment proposed · ${d.investment?.name || ''}`.trim(),
+      );
       setForm({ name: '', category: 'Fixed Income', principal: '', notes: '' });
       load();
     } else toast.error(d.error || 'Failed');

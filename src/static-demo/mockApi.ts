@@ -55,6 +55,15 @@ function pathOf(url: string): string {
   }
 }
 
+function queryOf(url: string): URLSearchParams {
+  try {
+    const u = new URL(url, window.location.origin);
+    return u.searchParams;
+  } catch {
+    return new URLSearchParams();
+  }
+}
+
 function now() {
   return Math.floor(Date.now() / 1000);
 }
@@ -242,12 +251,20 @@ export async function handleMockApi(input: RequestInfo | URL, init?: RequestInit
 
     setSession({ userId: user.id, portal });
     const auth = getAuth(state);
+    // Just-approved members see the welcome (congrats) page once before the
+    // dashboard — tracked via application.welcomeSeenAt
+    const application = auth.application as any;
+    const needsWelcome =
+      !!auth.member &&
+      !!application &&
+      application.status === 'APPROVED' &&
+      !application.welcomeSeenAt;
     return json({
       success: true,
       ...auth,
-      onboarding: !!auth.needsOnboarding,
+      onboarding: !!auth.needsOnboarding || needsWelcome,
       // Client can route: onboarding → /member/onboarding, else dashboard
-      redirectTo: auth.needsOnboarding
+      redirectTo: auth.needsOnboarding || needsWelcome
         ? '/member/onboarding'
         : portal === 'ADMIN'
           ? '/admin/dashboard'
@@ -1139,21 +1156,42 @@ export async function handleMockApi(input: RequestInfo | URL, init?: RequestInit
       ['PENDING', 'PENDING_APPROVAL', 'AWAITING_PAYMENT', 'AWAITING_KYM'].includes(a.status),
     );
     const totalContributions = state.members.reduce((s, m) => s + m.totalContributionsKobo, 0);
+    const totalDepositWalletBalance = state.members.reduce((s, m) => s + (m.depositBalanceKobo || 0), 0);
+    const totalShareCapital = state.members.reduce((s, m) => s + (m.sharesBalanceKobo || 0), 0);
     const activeLoans = state.loans.filter((l) => l.status === 'ACTIVE');
     const activeLoanPortfolio = activeLoans.reduce((s, l) => s + (l.totalDueKobo - l.paidKobo), 0);
     const pendingWithdrawals = state.fundRequests.filter((r) => r.type === 'WITHDRAWAL' && r.status === 'PENDING');
-    const pendingLoans = state.loans.filter((l) => l.status === 'PENDING_APPROVAL');
+    const pendingLoans = state.loans.filter((l) =>
+      ['PENDING_APPROVAL', 'PENDING_FS', 'PENDING_ADMIN', 'PENDING_SUPER', 'APPROVED'].includes(l.status),
+    );
     const pool = coOpPoolTotals(state);
     // current period compliance
     const periods = [...new Set(state.obligations.map((o) => o.monthPeriod))].sort().reverse();
     const currentPeriod = periods[0];
     const currentObs = state.obligations.filter((o) => o.monthPeriod === currentPeriod);
     const paidCount = currentObs.filter((o) => o.status === 'PAID').length;
+    // Payment-channel label per ledger type (mirrors real server fields)
+    const paymentSourceForType = (type: string) => {
+      if (type === 'CONTRIBUTION_PAYMENT' || type === 'ADMIN_CONTRIBUTION') return 'ADMIN_RECORD';
+      if (type === 'REGISTRATION_FEE') return 'PAYSTACK';
+      if (type.includes('DEPOSIT_TO') || type === 'DEPOSIT_FUNDING' || type === 'DEVELOPMENT_FEE') {
+        return 'DEPOSIT_WALLET';
+      }
+      return 'SYSTEM';
+    };
+    const membersMap = Object.fromEntries(state.members.map((m) => [m.id, m]));
+    const recentDeposits = state.fundRequests
+      .filter((r) => r.type === 'DEPOSIT')
+      .sort((a, b) => b.requestedAt - a.requestedAt)
+      .slice(0, 5)
+      .map((r) => ({ ...r, member: membersMap[r.memberId] || null }));
 
     return json({
       activeMembers: activeMembers.length,
       pendingApplications: pendingApplications.length,
       totalContributions,
+      totalDepositWalletBalance,
+      totalShareCapital,
       activeLoanPortfolio,
       pendingWithdrawals: pendingWithdrawals.length,
       pendingLoans: pendingLoans.length,
@@ -1161,7 +1199,11 @@ export async function handleMockApi(input: RequestInfo | URL, init?: RequestInit
       pool,
       contributionCompliance: currentObs.length ? Math.round((paidCount / currentObs.length) * 100) : 100,
       recentApplications: [...state.applications].sort((a, b) => b.submittedAt - a.submittedAt).slice(0, 5),
-      recentTransactions: [...state.ledger].sort((a, b) => b.date - a.date).slice(0, 8),
+      recentTransactions: [...state.ledger]
+        .sort((a, b) => b.date - a.date)
+        .slice(0, 8)
+        .map((l) => ({ ...l, paymentSource: paymentSourceForType(l.type) })),
+      recentDeposits,
       role: user.role,
     });
   }
@@ -1572,7 +1614,8 @@ export async function handleMockApi(input: RequestInfo | URL, init?: RequestInit
         .filter((l) =>
           ['CONTRIBUTION_PAYMENT', 'DEPOSIT_TO_CONTRIBUTION'].includes(l.type),
         )
-        .sort((a, b) => b.date - a.date),
+        .sort((a, b) => b.date - a.date)
+        .map((l) => ({ ...l, member: membersMap[l.memberId as string] || null })),
       members: state.members.map((m) => ({
         ...m,
         monthlySavingsKobo: monthlyAmt,
@@ -2037,18 +2080,35 @@ export async function handleMockApi(input: RequestInfo | URL, init?: RequestInit
   }
 
   if (apiPath === '/api/members/onboarding' && method === 'GET') {
+    // The onboarding tab keeps polling while staff sign in on this device
+    // (shared localStorage session), so resolve the applicant whose status
+    // this tab tracks: the member-portal session, or the applicantId captured
+    // when the page first loaded.
     const { user, portal } = getAuth(state);
-    if (!user || portal !== 'MEMBER') return json({ error: 'Unauthorized' }, 401);
+    const params = queryOf(url);
+    const applicantId =
+      user && portal === 'MEMBER' ? user.id : params.get('applicantId');
+    const applicant = applicantId
+      ? state.users.find((u) => u.id === applicantId)
+      : null;
+    if (!applicant) return json({ error: 'Unauthorized' }, 401);
+    const signedInAsApplicant = !!user && portal === 'MEMBER' && user.id === applicant.id;
     const application = (state.applications as any[]).find(
-      (a) => a.userId === user.id || a.email === user.email,
+      (a) => a.userId === applicant.id || a.email === applicant.email,
     );
     const member = state.members.find(
-      (m) => m.userId === user.id && m.status !== 'REMOVED' && m.status !== 'LEFT',
+      (m) => m.userId === applicant.id && m.status !== 'REMOVED' && m.status !== 'LEFT',
     );
+    const base = {
+      applicantId: applicant.id,
+      registrationFeeKobo: REGISTRATION_FEE_KOBO,
+      disclaimer:
+        'Payment of the registration fee guarantees you may continue onboarding. Membership approval remains subject to Know Your Member (KYM) verification and background checks by the cooperative.',
+    };
     // Fully approved member — show complete step (UI has Go to dashboard)
     if (member && (member.status === 'ACTIVE' || member.status === 'SUSPENDED')) {
-      if (user.role === 'APPLICANT') {
-        user.role = 'MEMBER';
+      if (signedInAsApplicant && applicant.role === 'APPLICANT') {
+        applicant.role = 'MEMBER';
         saveState(state);
       }
       return json({
@@ -2057,12 +2117,13 @@ export async function handleMockApi(input: RequestInfo | URL, init?: RequestInit
         member,
         application: application || null,
         redirectTo: '/member/dashboard',
-        registrationFeeKobo: REGISTRATION_FEE_KOBO,
-        disclaimer:
-          'Payment of the registration fee guarantees you may continue onboarding. Membership approval remains subject to Know Your Member (KYM) verification and background checks by the cooperative.',
+        signedInAsApplicant,
+        ...base,
       });
     }
-    if (!application) return json({ complete: false, application: null, step: null });
+    if (!application) {
+      return json({ complete: false, application: null, step: null, signedInAsApplicant, ...base });
+    }
     if (
       application.status === 'AWAITING_PAYMENT' &&
       application.regFeeDueAt &&
@@ -2079,11 +2140,10 @@ export async function handleMockApi(input: RequestInfo | URL, init?: RequestInit
         application,
         member: null,
         redirectTo: '/member/dashboard',
+        signedInAsApplicant,
         message:
           'Your membership was approved. Open your dashboard, or sign in again with your email and password if needed.',
-        registrationFeeKobo: REGISTRATION_FEE_KOBO,
-        disclaimer:
-          'Payment of the registration fee guarantees you may continue onboarding. Membership approval remains subject to Know Your Member (KYM) verification and background checks by the cooperative.',
+        ...base,
       });
     }
     let step = 'payment';
@@ -2092,14 +2152,26 @@ export async function handleMockApi(input: RequestInfo | URL, init?: RequestInit
     else if (application.status === 'REJECTED' || application.status === 'EXPIRED') {
       step = application.status.toLowerCase();
     }
-    return json({
-      complete: false,
-      application,
-      step,
-      registrationFeeKobo: REGISTRATION_FEE_KOBO,
-      disclaimer:
-        'Payment of the registration fee guarantees you may continue onboarding. Membership approval remains subject to Know Your Member (KYM) verification and background checks by the cooperative.',
-    });
+    return json({ complete: false, application, step, signedInAsApplicant, ...base });
+  }
+
+  if (apiPath === '/api/members/onboarding/welcome-seen' && method === 'POST') {
+    // Mark the approval welcome as seen so future sign-ins go straight to the
+    // dashboard. Accepts applicantId (member tab may be tracking an applicant
+    // while a staff session is active on this device).
+    const { user, portal } = getAuth(state);
+    const applicantId =
+      (user && portal === 'MEMBER' ? user.id : null) ||
+      body.applicantId ||
+      queryOf(url).get('applicantId');
+    if (!applicantId) return json({ error: 'Not found' }, 404);
+    const application = (state.applications as any[]).find(
+      (a) => a.userId === applicantId || a.email === applicantId,
+    );
+    if (!application) return json({ error: 'Not found' }, 404);
+    application.welcomeSeenAt = now();
+    saveState(state);
+    return json({ success: true });
   }
 
   if (apiPath === '/api/members/onboarding/pay-fee' && method === 'POST') {
@@ -2387,6 +2459,62 @@ export async function handleMockApi(input: RequestInfo | URL, init?: RequestInit
   if (apiPath === '/api/admin/announcements' && method === 'GET') {
     if (!requireStaff(state)) return json({ error: 'Unauthorized' }, 403);
     return json({ announcements: state.announcements });
+  }
+
+  if (apiPath === '/api/admin/reports' && method === 'GET') {
+    if (!requireStaff(state)) return json({ error: 'Unauthorized' }, 403);
+    const t = now();
+    const yearStart = Math.floor(new Date(new Date().getFullYear(), 0, 1).getTime() / 1000);
+    const active = state.members.filter((m) => m.status === 'ACTIVE');
+    const pool = coOpPoolTotals(state);
+    const activeLoans = state.loans.filter((l) => l.status === 'ACTIVE');
+    const completedLoans = state.loans.filter((l) => l.status === 'COMPLETED');
+    const latestPeriod =
+      [...state.dividendPeriods].sort((a: any, b: any) => (b.declaredAt || 0) - (a.declaredAt || 0))[0] ||
+      null;
+    const projection = latestPeriod
+      ? allocateDividendsByShares(
+          latestPeriod.surplusKobo,
+          state.members.map((m: any) => ({
+            id: m.id,
+            membershipNumber: m.membershipNumber,
+            sharesBalanceKobo: m.sharesBalanceKobo || 0,
+            status: m.status,
+          })),
+        )
+      : [];
+    return json({
+      generatedAt: t,
+      monthlyFinancials: {
+        totalContributionsKobo: state.members.reduce((s, m) => s + m.totalContributionsKobo, 0),
+        totalDepositBalanceKobo: state.members.reduce((s, m) => s + (m.depositBalanceKobo || 0), 0),
+        totalShareCapitalKobo: state.members.reduce((s, m) => s + (m.sharesBalanceKobo || 0), 0),
+        totalDevelopmentFeesKobo: ((state as any).developmentFees || []).reduce(
+          (s: number, f: any) => s + (f.paidAt ? f.amountKobo : 0),
+          0,
+        ),
+        coOpNetKobo: pool.net,
+      },
+      loanPortfolio: {
+        activeCount: activeLoans.length,
+        outstandingKobo: activeLoans.reduce((s, l) => s + (l.totalDueKobo - l.paidKobo), 0),
+        completedCount: completedLoans.length,
+        rejectedCount: state.loans.filter((l) => l.status === 'REJECTED').length,
+      },
+      membershipGrowth: {
+        activeCount: active.length,
+        pendingApplications: state.applications.filter((a) =>
+          ['PENDING', 'PENDING_APPROVAL', 'AWAITING_PAYMENT', 'AWAITING_KYM'].includes(a.status),
+        ).length,
+        joinedThisYear: state.members.filter((m) => m.joinedAt >= yearStart).length,
+        removedCount: state.members.filter((m) => m.status === 'REMOVED').length,
+      },
+      dividendProjection: {
+        periodLabel: latestPeriod?.label || 'None',
+        surplusKobo: latestPeriod?.surplusKobo || 0,
+        projectedPayoutKobo: projection.reduce((s, a) => s + a.amountKobo, 0),
+      },
+    });
   }
 
   console.warn('[api] unhandled', method, apiPath, getSession());
